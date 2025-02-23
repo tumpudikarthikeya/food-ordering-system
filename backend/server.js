@@ -15,6 +15,20 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 
+
+app.get("/test",async (req,res)=>{
+        try {
+          const { data, error } = await supabase
+            .from('restaurants')
+            .select('*');
+    
+          if (error) throw error;
+          res.json(data);
+        } catch (err) {
+          res.status(400).json({ error: err.message });
+        }
+})
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/restaurants', require('./routes/restaurants'));
